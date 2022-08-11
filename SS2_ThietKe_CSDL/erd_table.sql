@@ -42,7 +42,7 @@ ma_phieu_xuat int,
 ma_vat_tu int,
 don_gia_xuat double,
 so_luong_xuat int,
-primary key(ma_phieu_xuat,ma_vat_tu),
+primary key(ma_phieu_xuat, ma_vat_tu),
 foreign key(ma_phieu_xuat) references phieu_xuat(ma_phieu_xuat),
 foreign key(ma_vat_tu) references vat_tu(ma_vat_tu)
 );
