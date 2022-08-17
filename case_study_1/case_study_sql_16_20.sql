@@ -25,6 +25,39 @@ WHERE
     ma_khach_hang IN (SELECT 
             ma_khach_hang
         FROM
+            v_ma_loai_khach);
+CREATE VIEW v_ma_loai_khach AS
+    SELECT 
+        kh.ma_khach_hang,
+        kh.ho_ten,
+        lk.ma_loai_khach,
+        lk.ten_loai_khach,
+        SUM(IFNULL(dv.chi_phi_thue, 0) + IFNULL(hdct.so_luong, 0) * IFNULL(dvdk.gia, 0)) AS tong_tien
+    FROM
+        khach_hang kh
+            JOIN
+        loai_khach lk ON lk.ma_loai_khach = kh.ma_loai_khach
+            JOIN
+        hop_dong hd ON hd.ma_khach_hang = kh.ma_khach_hang
+            JOIN
+        hop_dong_chi_tiet hdct ON hdct.ma_hop_dong = hd.ma_hop_dong
+            JOIN
+        dich_vu dv ON dv.ma_dich_vu = hd.ma_dich_vu
+            JOIN
+        dich_vu_di_kem dvdk ON dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
+    WHERE
+        YEAR(hd.ngay_lam_hop_dong) = 2021
+            AND lk.ten_loai_khach = 'Platinium'
+    GROUP BY ma_khach_hang
+    HAVING tong_tien > 1000000;
+
+UPDATE khach_hang 
+SET 
+    ma_loai_khach = 1
+WHERE
+    ma_khach_hang IN (SELECT 
+            ma_khach_hang
+        FROM
             (SELECT 
                 kh.ma_khach_hang,
                     SUM(IFNULL(dv.chi_phi_thue, 0) + IFNULL(hdct.so_luong, 0) * IFNULL(dvdk.gia, 0)) AS tong_tien
@@ -37,13 +70,14 @@ WHERE
             LEFT JOIN loai_khach lk ON lk.ma_loai_khach = kh.ma_loai_khach
             WHERE
                 YEAR(hd.ngay_lam_hop_dong) = 2021
-                    AND lk.ten_loai_khach = 'Platinium'
+	AND lk.ten_loai_khach = 'Platinium'
             GROUP BY ma_khach_hang
-            HAVING tong_tien > 10000000) AS temp);
+            HAVING tong_tien > 1000000) AS temp);
 -- 18.	Xóa những khách hàng có hợp đồng trước năm 2021 (chú ý ràng buộc giữa các bảng).
 UPDATE khach_hang 
 SET 
     is_delete = 1
+
 WHERE
     ma_khach_hang IN (SELECT 
             ma_khach_hang

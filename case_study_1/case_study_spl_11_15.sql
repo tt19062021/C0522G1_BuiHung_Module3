@@ -52,13 +52,15 @@ GROUP BY hd.ma_hop_dong;
 SELECT 
     dvdk.ma_dich_vu_di_kem,
     dvdk.ten_dich_vu_di_kem,
-    SUM(hdct.so_luong) so_luong
+    SUM(hdct.so_luong) as so_luong
 FROM
     dich_vu_di_kem dvdk
         INNER JOIN
     hop_dong_chi_tiet hdct ON dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
 GROUP BY dvdk.ma_dich_vu_di_kem
-HAVING so_luong >= ALL (SELECT 
+HAVING so_luong >= 
+-- (select max(so_luong) from hop_dong_chi_tiet)
+	all (SELECT 
         SUM(hdct.so_luong)
     FROM
         hop_dong_chi_tiet hdct

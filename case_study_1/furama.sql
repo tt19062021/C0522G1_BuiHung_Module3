@@ -14,6 +14,7 @@ dia_chi varchar(45),
 ma_vi_tri int,
 ma_trinh_do int,
 ma_bo_phan int,
+trang_thai bit default 1,
 primary key (ma_nhan_vien)
 );
 
@@ -45,6 +46,7 @@ so_dien_thoai varchar(45),
 email varchar(45),
 dia_chi varchar(45),
 ma_loai_khach int,
+is_delete bit default 0,
 primary key(ma_khach_hang)
 );
 
@@ -90,6 +92,7 @@ tien_dat_coc double,
 ma_nhan_vien int,
 ma_khach_hang int,
 ma_dich_vu int,
+trang_thai bit default 1,
 primary key(ma_hop_dong)
 );
 
