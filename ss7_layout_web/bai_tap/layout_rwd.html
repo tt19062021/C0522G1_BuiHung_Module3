@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .head {
+            background: black;
+            color:white;
+            height: 50px;
+            width: 100%;
+        }
+
+
+        .footer {
+            background: lightslategray;
+            height: 50px;
+            width: 100%;
+            color:white;
+        }
+
+        .left {
+            background: violet;
+        }
+
+        .right {
+            background: aquamarine;
+        }
+
+        .main {
+            background: #CDCDCD;
+            height: 500px;
+            width: 70%;
+        }
+
+        .aside {
+            background: gray;
+
+        }
+
+        .row {
+            /*cho phép thẻ div (col) nổi lên trên*/
+            display: flex;
+            /*Các thẻ div (col)  không đủ chỗ chứa trên 1 hàng thì rớt xuống*/
+            flex-wrap: wrap;
+        }
+
+        .col-l-1 {
+            width: 8.33333%;
+        }
+
+        .col-l-2 {
+            width: 16.66667%;
+        }
+
+        .col-l-3 {
+            width: 25%;
+        }
+
+        .col-l-4 {
+            width: 33.33333%;
+        }
+
+        .col-l-5 {
+            width: 41.66667%;
+        }
+
+        .col-l-6 {
+            width: 50%;
+        }
+
+        .col-l-7 {
+            width: 58.33333%;
+        }
+
+        .col-l-8 {
+            width: 66.66667%;
+        }
+
+        .col-l-9 {
+            width: 75%;
+        }
+
+        .col-l-10 {
+            width: 83.33333%;
+        }
+
+        .col-l-11 {
+            width: 91.66667%;
+        }
+
+        .col-l-12 {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="row head">
+    <div class="col-l-1">LOGO</div>
+    <div class="col-l-1">Home</div>
+    <div class="col-l-1">About</div>
+    <div class="col-l-1">Project</div>
+    <div class="col-l-1">Contact</div>
+    <div class="col-l-6"></div>
+    <div class="col-l-1">
+        <img src="../picture_style/tải xuống.png" height="35px" width="35px">
+        <a>Login</a>
+    </div>
+</div>
+<div class="row  ">
+    <div class="col-l-2 main">
+        <ul>
+            <li>Link 1</li>
+            <li>Link 2</li>
+            <li>Link 3</li>
+        </ul>
+    </div>
+    <div class="col-l-8 ">
+        <div class="row">
+            <h1>Phong thủy </h1>
+        </div>
+        <div class="row">
+            <a>Phong thủy (chữ Hán:風水) là học thuyết có nguồn gốc từ Trung Quốc cổ đại, chuyên nghiên cứu sự ảnh hưởng của hướng gió, hướng khí, mạch nước đến đời sống họa hay phúc của con người. Về mặt từ nguyên, 風 phong có nghĩa là "gió", là hiện tượng không khí chuyển động và 水 thủy có nghĩa là "nước", là dòng nước, tượng trưng cho địa thế. Phong thủy không phải là yếu tố đơn lẻ mà là tổng hợp hàng loạt yếu tố về địa hình địa thế xung quanh nhà ở, thôn xóm, thành phố hoặc mồ mả, hướng gió, dòng nước cùng tọa hướng, hình dạng, bố cục mặt bằng không gian xây dựng. Phong thủy liên quan đến cát hung, họa phúc, thọ yểu, sự cùng thông của nhân sự. Cát ắt là phong thủy hợp, hung ắt là phong thủy không hợp.</a>
+            <hr>
+        </div>
+        <div class="row">
+            <h2>Địa lý phong thủy</h2>
+        </div>
+        <div class="row">
+            <a>Hai chữ "địa lý" là danh từ áp dụng chung cho cả hai môn:
+
+                Địa mạch: Là môn địa lý phong thủy thuộc về địa linh, dùng vào việc đặt mồ mả và nhà cửa; tức thuộc về tinh thần.
+                Địa dư: Là môn địa lý điền thổ, thuộc về địa lợi; thuộc về vấn đề vật chất.</a>
+        </div>
+    </div>
+    <div class="col-l-2 main"></div>
+</div>
+<div class="row footer">
+    <div class="col-l-5"></div>
+    <div class="col-l-2">Footer text</div>
+    <div class="col-l-5"></div>
+</div>
+</body>
+</html>
