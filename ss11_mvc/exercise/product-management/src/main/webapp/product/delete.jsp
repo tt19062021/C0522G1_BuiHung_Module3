@@ -57,7 +57,7 @@
             </tr>
             <tr>
                 <td><input type="submit" value="Xóa"></td>
-                <td><a href="/product">Không</a></td>
+                <td><a href="/product">Quay lai trang</a></td>
             </tr>
         </table>
     </fieldset>

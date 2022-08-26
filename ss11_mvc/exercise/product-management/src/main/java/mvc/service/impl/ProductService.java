@@ -8,40 +8,13 @@ import mvc.service.IProductService;
 import java.util.List;
 
 public class ProductService implements IProductService {
-    private IProductReponsitory iProductReponsitory = new ProductReponsitory();
+    private static IProductReponsitory iProductReponsitory = new ProductReponsitory();
 
     @Override
-    public List<Product> display() {
+    public List<Product> findAll() {
         return iProductReponsitory.findAll();
     }
 
-    @Override
-    public void addNew(Product product) {
-        iProductReponsitory.save(product);
-
-    }
-
-    @Override
-    public void update(Product product) {
-        iProductReponsitory.findById(product.getId());
-    }
-
-
-    @Override
-    public void remove(int id) {
-        iProductReponsitory.remove(id);
-    }
-
-    @Override
-    public void view(int id) {
-
-    }
-
-
-    @Override
-    public Product searchByID(int id) {
-        return iProductReponsitory.searchByID(id);
-    }
 
     @Override
     public List<Product> searchByName(String name) {
@@ -49,8 +22,23 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public Product findById(int id) {
+        return iProductReponsitory.findById(id);
+    }
+
+    @Override
     public void save(Product product) {
         iProductReponsitory.save(product);
+    }
+
+    @Override
+    public void delete(int id) {
+        iProductReponsitory.delete(id);
+    }
+
+    @Override
+    public void update(int id, Product product) {
+        iProductReponsitory.update(id,product);
     }
 
 }

@@ -5,13 +5,11 @@ import mvc.model.Product;
 import java.util.List;
 
 public interface IProductService {
-    List<Product> display();
-    void addNew(Product product);
-    void update( Product product);
-    void remove(int id);
-    void view(int id);
+    List<Product> findAll();
 
-    Product searchByID(int id);
     List<Product> searchByName(String name);
+    Product findById(int id);
     void save(Product product);
+    void delete(int id);
+    void update(int id, Product product);
 }

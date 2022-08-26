@@ -32,22 +32,22 @@
 <p style="text-align: center">
     <a href="/product?action=create"><i class="fa-solid fa-plus"></i> Thêm thông tin sản phẩm</a>
 </p>
-<form class="d-flex justify-content-end" action="/product?action=Search">
+<form class="d-flex justify-content-end" action="/product?action=search">
     <input type="text" name="nameSearch" placeholder="Nhập tên cần tìm kiếm" style="margin-right: 20px;">
-    <input type="submit" name="action" value="Search" style="margin-right: 20px;">
+    <input type="submit" name="action" value="search" style="margin-right: 20px;">
 </form>
 <table class="table table-striped">
     <tr>
         <%--        <th>Mã sản phẩm</th>--%>
-        <th>Tên sản phẩm</th>
-        <th>Giá tiền</th>
-        <th>Mô tả</th>
-        <th>Hãng sản xuất</th>
-        <th>Cập nhập</th>
-        <th>Xóa</th>
-        <th>Xem</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Producer</th>
+        <th>Update</th>
+        <th>Delete</th>
+        <th>View</th>
     </tr>
-    <c:forEach items="${productList}" var="product">
+    <c:forEach items="${product}" var="product">
         <tr>
                 <%--            <td>${product.getId()}</td>--%>
             <td>${product.getProductName()}</td>

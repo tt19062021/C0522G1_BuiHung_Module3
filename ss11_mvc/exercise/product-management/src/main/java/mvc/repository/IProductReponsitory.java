@@ -7,13 +7,12 @@ import java.util.List;
 public interface IProductReponsitory {
     List<Product> findAll();
 
-    void save(Product product);
-
     Product findById(int id);
 
-    void update(int id, Product product);
-
-    void remove(int id);
     List<Product> search(String name);
-    Product searchByID(int id);
+
+    void save(Product product);
+    void delete(int id);
+    String view(int id);
+    void update(int id, Product product);
 }
