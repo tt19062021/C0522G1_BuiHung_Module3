@@ -15,5 +15,5 @@ public interface IUserService {
     boolean deleteUser(int id) ;
 
     boolean updateUser(User user) ;
-
+    void addUserTransaction(User user, int[] permision);
 }

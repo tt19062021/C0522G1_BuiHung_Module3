@@ -52,13 +52,24 @@
             <td>${user.getName()}</td>
             <td>${user.getEmail()}</td>
             <td>${user.getCountry()}</td>
-
-            <td><a href="/user?action=update&id=${user.getId()} " class="btn btn-primary" role="button">Edit</a></td>
-            <td><a href="/user?action=delete&id=${user.getId()}" class="btn btn-primary" role="button">Delete</a></td>
+            <td>
+                <a href="/user?action=update&id=${user.getId()} " class="btn btn-primary" role="button">Edit</a>
+            </td>
+            <td>
+                <a href="/user?action=delete&id=${user.getId()}" class="btn btn-primary" role="button">Delete</a>
+            </td>
             <td><a href="/user?action=view&id=${user.getId()}" class="btn btn-primary" role="button">View</a></td>
         </tr>
+
     </c:forEach>
+
 </table>
 <h4><a href="/user?action=create" class="link-success">Add New User</a></h4>
 </body>
+<script>
+    function objdelete(id, name) {
+        document.getElementById("idDelete").value = id;
+        document.getElementById("nameDelete").innerText = name;
+    }
+</script>
 </html>

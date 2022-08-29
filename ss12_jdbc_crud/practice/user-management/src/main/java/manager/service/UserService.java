@@ -43,6 +43,11 @@ public class UserService implements IUserService{
         public boolean updateUser(User user) {
             return iUserRepository.updateUser(user);
         }
+
+    @Override
+    public void addUserTransaction(User user, int[] permision) {
+        iUserRepository.addUserTransaction(user,permision);
     }
+}
 
 

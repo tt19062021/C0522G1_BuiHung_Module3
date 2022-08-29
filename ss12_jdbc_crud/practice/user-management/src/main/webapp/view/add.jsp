@@ -39,29 +39,40 @@
     </h6>
 
 </center>
-<div align="center">
+<div >
     <form method="post">
-        <table border="1" cellpadding="5">
+        <table >
             <tr>
                 <th>User Name:</th>
                 <td>
-                    <input type="text" name="name" id="name" size="45"/>
+                    <input name="name" id="name" class="form-control form-control-sm" type="text" placeholder=".nhập vào tên" aria-label=".form-control-sm example">
+<%--                    <input type="text" name="name" id="name" size="45"/>--%>
                 </td>
             </tr>
             <tr>
                 <th>User Email:</th>
                 <td>
-                    <input type="text" name="email" id="email" size="45"/>
+                    <input name="email" id="email" type="email" class="form-control form-control-sm"  placeholder="name@example.com">
+<%--                    <input type="text" name="email" id="email" size="45"/>--%>
                 </td>
             </tr>
             <tr>
                 <th>Country:</th>
                 <td>
-                    <input type="text" name="country" id="country" size="15"/>
+                    <input name="country" id="country" class="form-control form-control-sm" list="datalistOptions"  placeholder=".search here...">
+                    <datalist id="datalistOptions">
+                        <option value="San Francisco">
+                        <option value="New York">
+                        <option value="Seattle">
+                        <option value="Los Angeles">
+                        <option value="Chicago">
+                    </datalist>
+<%--                    <input type="text" name="country" id="country" size="15"/>--%>
                 </td>
             </tr>
             <tr>
                 <td colspan="2" align="center">
+
                     <input type="submit" value="Save"/>
                 </td>
             </tr>

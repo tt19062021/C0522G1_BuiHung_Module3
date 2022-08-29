@@ -40,10 +40,22 @@ public class UserServlet extends HttpServlet {
             case "update":
                 showUpdate(request, response);
                 break;
+            case "permision":
+                addUserPermision(request, response);
+                break;
             default:
                 showListUser(request, response);
                 break;
         }
+    }
+
+    private void addUserPermision(HttpServletRequest request, HttpServletResponse response) {
+
+        User user = new User("quan", "quan.nguyen@codegym.vn", "vn");
+
+        int[] permision = {1, 2, 4};
+
+        iUserRepository.addUserTransaction(user, permision);
     }
 
     private void showUpdate(HttpServletRequest request, HttpServletResponse response) {
@@ -86,7 +98,7 @@ public class UserServlet extends HttpServlet {
 
 
     private void showInsertUser(HttpServletRequest request, HttpServletResponse response) {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("view/add.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("view/create.jsp");
         try {
             requestDispatcher.forward(request, response);
         } catch (ServletException | IOException e) {

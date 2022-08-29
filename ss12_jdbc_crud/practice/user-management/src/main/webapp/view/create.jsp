@@ -18,7 +18,7 @@
 <body>
 <h3>Create New User</h3>
 <a href="/user?action=user" tabindex="0" class="btn btn-sm btn-danger" role="button" data-bs-toggle="popover" data-bs-trigger="focus" title="Dismissible popover" data-bs-content="Click to return Home">Home</a>
-<form>
+<form method="post">
 <%--    <div class="mb-3">--%>
 <%--        <label  class="form-label">ID (Id Người dùng):</label>--%>
 <%--        <input name="id" id="id" class="form-control form-control-sm" type="number" placeholder=".nhập vào id" aria-label=".form-control-sm example">--%>
@@ -29,7 +29,7 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Email (Địa chỉ Email)</label>
-        <input name="gmail" id="gmail" type="text" class="form-control form-control-sm"  placeholder="name@example.com">
+        <input name="email" id="email" type="email" class="form-control form-control-sm"  placeholder="name@example.com">
     </div>
 
     <div class="mb-3">
@@ -43,7 +43,7 @@
             <option value="Chicago">
         </datalist>
     </div>
-    <button type="submit" class="btn btn-primary" value="Create"></button>
+    <button type="submit" class="btn btn-primary" value="Create">Create</button>
 </form>
 </body>
 </html>

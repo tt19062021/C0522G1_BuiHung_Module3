@@ -13,11 +13,11 @@ public class UserRepository implements IUserRepository {
     static List<User> listUser = new ArrayList<>();
 
 
-    private static final String INSERT_USERS_SQL = "INSERT INTO users (user_name, email, country) VALUES (?, ?, ?);";
+    private static final String INSERT_USERS_SQL = "call insert_user(?,?,?);";
     private static final String SELECT_USER_BY_ID = "select * from users where id =?";
-    private static final String SELECT_ALL_USERS = "select * from users";
-    private static final String DELETE_USERS_SQL = "delete from users where id = ?;";
-    private static final String UPDATE_USERS_SQL = "update users set user_name = ?,email= ?, country =? where id = ?;";
+    private static final String SELECT_ALL_USERS = "call select_users();";
+    private static final String DELETE_USERS_SQL = "call delete_users(?);";
+    private static final String UPDATE_USERS_SQL = "call update_user(?,?,?,?);";
     private static final String SEARCH_BY_COUNTRY = " select * from users where country like ? ";
 
     private void printSQLException(SQLException ex) {
@@ -41,8 +41,8 @@ public class UserRepository implements IUserRepository {
         listUser.clear();
         Connection connection = BaseRepository.getConnectDB();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            CallableStatement callableStatement = connection.prepareCall(SELECT_ALL_USERS);
+            ResultSet resultSet = callableStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("user_name");
@@ -93,11 +93,11 @@ public class UserRepository implements IUserRepository {
     public boolean add(User user) {
         Connection connection = BaseRepository.getConnectDB();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getCountry());
-            int num = preparedStatement.executeUpdate();
+            CallableStatement callableStatement = connection.prepareCall(INSERT_USERS_SQL);
+            callableStatement.setString(1, user.getName());
+            callableStatement.setString(2, user.getEmail());
+            callableStatement.setString(3, user.getCountry());
+            int num = callableStatement.executeUpdate();
             return num == 1;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -133,9 +133,9 @@ public class UserRepository implements IUserRepository {
         boolean rowDeleted;
 
         try {
-            PreparedStatement statement = connection.prepareStatement(DELETE_USERS_SQL);
-            statement.setInt(1, id);
-            rowDeleted = statement.executeUpdate() > 0;
+            CallableStatement callableStatement = connection.prepareCall(DELETE_USERS_SQL);
+            callableStatement.setInt(1, id);
+            rowDeleted = callableStatement.executeUpdate() > 0;
             return rowDeleted;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -148,18 +148,84 @@ public class UserRepository implements IUserRepository {
         Connection connection = BaseRepository.getConnectDB();
         boolean rowUpdated;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_SQL);
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getCountry());
-            preparedStatement.setInt(4, user.getId());
-            rowUpdated = preparedStatement.executeUpdate() > 0;
+            CallableStatement callableStatement = connection.prepareCall(UPDATE_USERS_SQL);
+            callableStatement.setInt(1, user.getId());
+            callableStatement.setString(2, user.getName());
+            callableStatement.setString(3, user.getEmail());
+            callableStatement.setString(4, user.getCountry());
+
+            rowUpdated = callableStatement.executeUpdate() > 0;
             return rowUpdated;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
+
+    @Override
+    public void addUserTransaction(User user, int[] permision) {
+        Connection conn = null;
+        // for insert a new user
+        PreparedStatement pstmt = null;
+        // for assign permision to user
+        PreparedStatement pstmtAssignment = null;
+        // for getting user id
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            // set auto commit to false
+            conn.setAutoCommit(false);
+            //
+            // Insert user
+            //
+            pstmt = conn.prepareStatement(INSERT_USERS_SQL, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, user.getName());
+            pstmt.setString(2, user.getEmail());
+            pstmt.setString(3, user.getCountry());
+            int rowAffected = pstmt.executeUpdate();
+            // get user id
+            rs = pstmt.getGeneratedKeys();
+            int userId = 0;
+            if (rs.next())
+                userId = rs.getInt(1);
+            //
+            // in case the insert operation successes, assign permision to user
+            //
+            if (rowAffected == 1) {
+                // assign permision to user
+                String sqlPivot = "INSERT INTO user_permision(user_id,permision_id) "
+                        + "VALUES(?,?)";
+                pstmtAssignment = conn.prepareStatement(sqlPivot);
+                for (int permisionId : permision) {
+                    pstmtAssignment.setInt(1, userId);
+                    pstmtAssignment.setInt(2, permisionId);
+                    pstmtAssignment.executeUpdate();
+                }
+                conn.commit();
+            } else {
+                conn.rollback();
+            }
+        } catch (SQLException ex) {
+            // roll back the transaction
+            try {
+                if (conn != null)
+                    conn.rollback();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (pstmtAssignment != null) pstmtAssignment.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 
     protected Connection getConnection() {
         Connection connection = null;
